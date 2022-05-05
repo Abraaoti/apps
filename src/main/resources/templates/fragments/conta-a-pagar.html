@@ -1,0 +1,89 @@
+<div th:fragment="modal-conta-a-pagar" class="modal fade" id="contaPagar" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Pagar Contas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/processofinanceiro/salvar}" th:object="${processo}" method="POST" class="was-validated" enctype="multipart/form-data">
+                    <div th:replace="fragments/alert :: alerta-sucesso"></div>
+                    <div class="form-group row">
+
+                        <div class="form-group col-md-3">
+                            <label for="emissao">Emissão<span class="invalid-feedback">*</span></label>                                       
+                            <input type="date" class="form-control" th:field="*{emissao}" id="emissao" placeholder="00/00/0000" required />
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="vencimento">Vencimento<span class="invalid-feedback">*</span></label>                                          
+                            <input type="date" class="form-control" th:field="*{vencimento}"  id="vencimento" required/>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="documento">Documento<span class="invalid-feedback">*</span></label>                                          
+                            <input type="text" class="form-control" th:field="*{documento}"  id="documento" required/>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="valorTotal">Valor Total<span class="invalid-feedback">*</span></label>                                          
+                            <input type="text" class="form-control" th:field="*{valorTotal}"  id="valorTotal" required/>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-3">
+                            <label for="fornecedor">Fornecedor<span class="invalid-feedback">*</span></label>
+                            <select  id="fornecedor" th:field="*{fornecedor}" class="form-control">
+                                <option th:each="fornecedor : ${fornecedores}" th:value="${fornecedor.id}" th:text="${fornecedor.nome}" selected="selected"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="centroCusto">CC<span class="invalid-feedback">*</span></label>
+                            <select  id="centroCusto" th:field="*{centroCusto}" class="form-control">
+                                <option th:each="centroCusto : ${centroCustos}" th:value="${centroCusto.id}" th:text="${centroCusto.centro}" selected="selected"/>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="forma_pagamento">Forma Pag<span class="invalid-feedback">*</span></label>
+                            <select  id="centroCusto" th:field="*{forma_pagamento}" class="form-control">
+                                <option th:each="forma_pagamento : ${T(br.com.cmil.controle.dominio.enuns.FormaPagamento).values()}" th:value="${forma_pagamento.name()}" th:text="${forma_pagamento.name()}" selected="selected"/>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="parcela">Parcela<span class="invalid-feedback">*</span></label> 
+                            <input type="text" class="form-control" id="parcela" placeholder="000000000000" th:field="*{parcela}" required />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="valorPagar">Valor a Pagar<span class="invalid-feedback">*</span></label> 
+
+                            <input type="text" class="form-control" id="valorPagar" placeholder="000000000000" th:field="*{valorPagar}"  readonly="true"/>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-group col-md-2">
+                            <label for="operador">Operador<span class="invalid-feedback">*</span></label> 
+                            <input type="text" class="form-control" id="operador" placeholder="Ad" th:field="*{operador}" required />
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" th:field="*{id}"/>	
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Pagar</button>
+            </div>
+        </div>
+    </div>
+</div>

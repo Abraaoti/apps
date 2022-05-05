@@ -1,0 +1,53 @@
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:with="version=${#strings.randomAlphanumeric(3)}">
+    <head th:replace="fragments/base :: baseHead(~{::title}, ~{::link})">
+        <title>Recupera Senha</title>
+
+        <link th:href="@{/css/recuperar-senha.css(v=${version}) }" rel="stylesheet" />
+        <link th:rel="stylesheet" type="text/css" media="all"  th:href="@{/css/index.css}"/>
+        <link rel="icon" th:href="@{/image/favicon.ico}" />
+    </head>
+    <body>
+        <div th:insert="fragments/menuindex" />
+
+        <section class="layout-content" layout:fragment="corpo">	
+            <main role="main">
+                
+
+                <div class="album py-5 bg-light">
+                    <div class="container d-flex justify-content-center">
+                       
+                    
+              
+                <form th:action="@{/u/p/recuperar/senha}"
+                      class="form-signin was-validated"  method="GET" >		
+                   
+                    <div th:replace="fragments/alert :: alerta-sucesso"></div>
+
+                    <div class="form-label-group">
+                        <input type="email" id="inputEmail" class="form-control" placeholder="e-mail" 
+                               name="email"  required autofocus />
+                        <label for="inputEmail">Email</label>
+                        <div class="invalid-feedback">
+                            Use seu email como login.
+                        </div>
+                    </div>
+
+                    <button class="btn btn-lg btn-info btn-block" type="submit">Confirmar Solicitação</button>
+                    <hr>
+                        <nav class="nav nav-pills flex-column flex-sm-row">
+                            <a class="flex-sm-fill text-sm-left nav-link text-decoration-none" th:href="@{/}">
+                                <i class="fas fa-home"></i>&nbsp;Home</a>
+                        </nav>
+                        <p class="mt-5 mb-3 text-muted text-center">Clínica Spring
+                            Security&copy; 2019</p>
+                </form>
+                      </div>
+</div>
+            </main>
+        </section>
+        <script th:src="~{}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript"></script>
+</html>

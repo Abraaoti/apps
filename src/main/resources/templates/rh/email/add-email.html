@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-10">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>	
+
+                            <form th:action="${cargo.id == null} ? @{/cargos/salvar} : @{/cargos/editar}"
+                                  th:object="${cargo}"	method="POST" class="was-validated">
+                                <div class="form-row">
+                                    <label for="email" class="col-sm-2 col-form-label">E-mail </label>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control" th:field="*{email}" id="email" required/>
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <label for="pessoaEmail" class="col-sm-2 col-form-label">Nome </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control-plaintext" th:field="*{pessoaEmail.nome}" id="pessoaEmail" readonly/>
+
+                                    </div>
+                                </div>
+
+                                <input type="hidden" th:field="*{id}"/>	
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary"
+                                                data-toggle="tooltip" data-placement="right" title="Salvar">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr/>
+
+                            <h2>Lista de Departamentos</h2>
+
+                            <table id="table-cargos" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Excluir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                </main>
+        </section>
+        <script src="../../static/js/email.js" th:src="@{/js/email.js}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript"></script>
+    </body>
+</html>

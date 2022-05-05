@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      th:with="version=${#strings.randomAlphanumeric(3)}">
+    <head th:replace="fragments/base :: baseHead(~{::title}, ~{::link})">
+        <title>Gestão Financeiro</title>
+        <link href="../static/css/style-home.css" th:rel="stylesheet" type="text/css" media="all"  th:href="@{/css/style-home.css}"/>
+        <!-- Custom styles for this template -->
+        <link th:href="@{/css/style-home.css(v=${version}) }" rel="stylesheet" />
+        <link th:href="@{/css/style.css(v=${version}) }" rel="stylesheet" />
+        <link th:rel="stylesheet" type="text/css" media="all"  th:href="@{/css/index.css}"/>
+    </head>
+    <body>
+        <div th:insert="fragments/menuindex" />
+
+
+
+        <section class="layout-content" layout:fragment="corpo">
+            <main role="main">                
+
+                <div class="album py-5 bg-light">
+
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/medicina_1.jpg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Cartão Consular</h5>
+                                            <p class="card-text">Entrega do primeiro cartão consular da campanha, do consulado geral de Angola no Rio de Janeiro 02/2022...</p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/medicina_2.jpg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Augusto e Gabriel do ES e...</h5>
+                                            <p class="card-text">A cardiologia aborda as doenças
+                                                relacionadas com o coração e sistema vascular...</p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/medicina_3.jpg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Consulado Geral, Vice-consul e ..</h5>
+                                            <p class="card-text">Complexo preparado com uma estrutura
+                                                que engloba todas as áreas não cirúrgicas
+                                                Complexo preparado com uma estrutur...</p>
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/ang4.jpeg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Preencimento do formulário</h5>
+                                            <p class="card-text">...</p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/ang5.jpg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Segundo dia</h5>
+                                            <p class="card-text">Lídia, Noeto e Gelson no segundo dia da camponha consular...</p>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-4 box-shadow">
+                                    <img class="card-img-top" th:src="@{/image/ang6.jpg}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Brasil e África</h5>
+                                            <p class="card-text">Dois continentes no mesmo lugar...África mama África...</p>
+                                        </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </section>
+        <footer th:replace="fragments/footer :: rodape"/>
+
+        <script th:src="~{}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript"></script>
+    </body>
+</html>
