@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+           
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-8">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>
+
+                            <form th:action="@{/u/cadastro/salvar}"  th:object="${usuario}" method="POST" class="was-validated">
+
+
+                                <div class="mb-3">
+                                    <label for="email" >Email</label>
+                                    <input type="email" class="form-control" id="email"
+                                           th:field="*{email}" placeholder="Email"
+                                           aria-describedby="validationTooltipUsernamePrepend" required />
+                                    <div class="invalid-feedback">Email é requerido.</div>
+                                </div>
+
+
+
+                                <div class="mb-3">
+                                    <label for="password">Senha</label>
+                                    <input type="password" class="form-control" id="password" maxlength="6"
+                                           th:field="*{password}" placeholder="Insira sua senha de acesso" required />
+                                    <div class="invalid-feedback">Senha é requerida para confirmar a operação.</div>
+                                </div>
+
+
+
+
+
+                                <div class="mb-3">
+                                    <label class="form-check-label" for="perfis"><b>Perfil</b></label>
+                                    <th:block th:each="perfis : ${perfis}" >
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" th:value="${perfis.id}" th:text="${perfis.desc}" id="perfis"  th:field="*{perfis}" />
+                                        </div>
+                                    </th:block>
+                                    <div class="invalid-feedback">Pelo menos um perfil é requerido.</div>
+
+                                </div>
+
+                               
+
+                                <div class="mb-3">
+                                    <div class="form-check form-switch">
+                                        <input type="checkbox"  class="form-check-input" th:field="*{ativo}"  th:if="${ativo == true ? 'checked=checked' : ''}" />
+                                        <label class="form-check-label" for="ativo">Cadastro Ativo</label>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" th:field="*{id}"> 
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary"
+                                                data-toggle="tooltip" data-placement="right" title="Salvar">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <script	th:src="~{}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript">
+            $('#perfis').ready(function () {
+                var perfis = [[usuario.roleds]];
+                $.each(perfis, function (k, v) {
+                    $('#perfis: checkbox[value"' + v.id + ' "] ').attr('checked', 'checked');
+                });
+            });
+        </script>
+    </body>
+</html>

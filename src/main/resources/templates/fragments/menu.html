@@ -1,0 +1,77 @@
+
+<nav th:fragment="menu" >
+    <div class="nav-side-menu" >
+        <div class="brand">
+            <a class="navbar-brand" th:href="@{/home}">
+                <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+                <img th:src="@{/image/LOGO.png}" width="30" heiight="30"/>
+            </a>
+        </div>
+
+        <div class="menu-list">
+
+            <ul id="menu-content" class="menu-content collapse out">               
+
+                <li  data-toggle="collapse" data-target="#admin" class="collapsed">
+                    <a href="#"><i class="fa-solid fa-folder-gear"></i> ADMINISTRADOR <span class="arrow"><i class="fa fa-angle-down"></i></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="admin">
+                    <li><a href="#" id="especialidad" th:href="@{/especialidades}"><i class="fa fa-angle-right"></i> Especialidade</a></li>
+                    <li><a href="#" id="dc" th:href="@{/departamentos}"><i class="fa fa-angle-right"></i>Departamento</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a href="#" id="cadastrouser" th:href="@{/u/novo/cadastro/usuario}"><i class="fa fa-angle-right"></i> Cadastro de Usuários</a></li>
+                    <li><a href="#" id="listaUser" th:href="@{/u/lista}"><i class="fa fa-angle-right"></i> Lista Usuários <small><i class="fa fa-external-link"></i></small></a></li>
+                </ul>
+
+
+
+                <li  data-toggle="collapse" data-target="#finance" class="collapsed">
+                    <a href="#"><i class="fa-solid fa-bed-pulse"></i> FINANCEIRO <span class="arrow"><i class="fa fa-angle-down"></i></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="finance">                           
+                    <li><a href="#" th:href="@{/processofinanceiro/novo}"><i class="fa fa-angle-right"></i> <small>ADD PROCESSO</small></a></li>
+                    <li><a href="#" th:href="@{/pagarcontas/novo}"><i class="fa fa-angle-right"></i> <small>ADD CONTA</small></a></li>
+                    <li><a href="#" th:href="@{/processofinanceiro/processos}"><i class="fa fa-angle-right"></i> <small>PROCESSOS</small></a></li>
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#reh" class="collapsed">
+                    <a href="#"><i class="fa-solid fa-folder-gear"></i> RHUMANOS<span class="arrow"><i class="fa fa-angle-down"></i></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="reh">                           
+                    <li><a href="#" th:href="@{/funcionarios}"><i class="fa fa-angle-right"></i>Funcionário</a></li>
+                    <li><a href="#" th:href="@{/cargos}"><i class="fa fa-angle-right"></i>Cargos</a></li>
+                    <li><a href="#" th:href="@{/funcionarios/funcionarios}"><i class="fa fa-angle-right"></i> Funcionários</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a href="#" th:href="@{/enderecos/lista}"><i class="fa fa-angle-right"></i> Endereços <small><i class="fa fa-external-link"></i></small></a></li>
+                    <li><a href="#" th:href="@{/email/lista}"><i class="fa fa-angle-right"></i>E-mail <small><i class="fa fa-external-link"></i></small></a></li>
+                    <li><a href="#" th:href="@{/telefones/lista}"><i class="fa fa-angle-right"></i> Telefones<small><i class="fa fa-external-link"></i></small></a></li>
+                </ul>
+
+                <li  data-toggle="collapse" data-target="#suprimento" class="collapsed">
+                    <a href="#"><i class="fa-solid fa-folder-gear"></i> SUPRIMENTOS<span class="arrow"><i class="fa fa-angle-down"></i></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="suprimento">
+                    <li><a href="#"  th:href="@{/produtos/dados}"><i class="fa fa-angle-right"></i>ADD Produtos</a></li>
+                    <li><a href="#"  th:href="@{/categorias}"><i class="fa fa-angle-right"></i>ADD Categorias</a></li>
+                    <li><a href="#"  th:href="@{/centros}"><i class="fa fa-angle-right"></i>ADD Centro de Custo</a></li>
+                    <li><a href="#"  th:href="@{/oc}"><i class="fa fa-angle-right"></i>ADD Ordem de Compras</a></li>
+
+
+                </ul>
+                <li  data-toggle="collapse" data-target="#adm" class="collapsed">
+                    <a href="#"><i class="fa-solid fa-folder-gear"></i> ADM<span class="arrow"><i class="fa fa-angle-down"></i></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="adm">
+                    <li><a href="#"  th:href="@{/empresas}"><i class="fa fa-angle-right"></i>Empresa</a></li>
+                    <li><a href="#"  th:href="@{/empresas/empresas}"><i class="fa fa-angle-right"></i>Empresas</a></li>
+                    <li><a href="#"  th:href="@{/fornecedores}"><i class="fa fa-angle-right"></i> Fornecedor</a></li>
+                    <li><a href="#"  th:href="@{/fornecedores/fornecedores}"><i class="fa fa-angle-right"></i>Fornecedores</a></li>
+                    
+
+                </ul>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+

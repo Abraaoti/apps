@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-10">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>	
+
+                            <form th:action="${centro.id == null} ? @{/centros/salvar} : @{/centros/editar}"
+                                  th:object="${centro}"	method="POST" class="was-validated">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="centro" class="form-group">CC </label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{centro}" id="centro" placeholder="SEDE"
+                                               required/>
+                                        <div class="invalid-feedback">Centro de Custo  é requerido.</div>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <input type="hidden" th:field="*{id}"/>	
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary" data-toggle="tooltip"
+                                                data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr/>
+
+                            <h2>Lista de Centros de Custo</h2>
+
+                            <table id="table-centro" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Especialidade</th>
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Excluir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+    <script src="../../static/js/centro.js" th:src="@{/js/centro.js}" th:fragment="js"></script>
+    <script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>

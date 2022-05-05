@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>	
+
+                            <form th:action="${endereco.enderecoId == null} ? @{/enderecos/salvar} : @{/enderecos/editar}"
+                                  th:object="${endereco}"	method="POST" class="was-validated">
+                                <input type="hidden" class="form-control-plaintext" th:field="*{pessoaEndereco}" />
+
+                                <div class="form-group row">
+                                    <label for="uf" class="col-sm-4 col-form-label">Estado</label>
+                                    <div class=" col-md-6">
+                                        <input type="text" class="form-control" th:field="*{uf}" id="uf" required/>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="cidade" class="col-sm-4 col-form-label">Cidade</label> 
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="cidade" th:field="*{cidade}" required />
+                                    </div>
+                                </div>
+                                
+                                <div class=" form-group row">
+                                    <label for="bairro" class="col-sm-4 col-form-label">Bairro</label> 
+                                    <div class=" col-md-5">
+                                        <input type="text" class="form-control" id="bairro" th:field="*{bairro}" required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="rua" class="col-sm-4 col-form-label">Rua</label> 
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" id="rua"  th:field="*{rua}" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="cep" class="col-sm-4 col-form-label">CEP</label> 
+                                    <div class=" col-md-3">
+                                        <input type="text" class="form-control" id="cep"  th:field="*{cep}" required />                                        
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="numero" class="col-sm-4 col-form-label">Número</label> 
+                                    <div class=" col-md-2">
+                                        <input type="text" class="form-control" id="numero"  th:field="*{numero}" required />                                        
+
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="complemento" class="col-sm-4 col-form-label">Complemento </label>
+                                    <div class=" col-md-4">
+                                        <input type="text" class="form-control" th:field="*{complemento}" id="complemento"  />
+
+                                    </div>
+                                </div>
+
+                                <input type="hidden" th:field="*{enderecoId}"/>	
+                                <input type="hidden" name="pessoaEndereco" th:field="*{pessoaEndereco}"/>	
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary" data-toggle="tooltip"
+                                                data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr/>
+                            <table id="table-adrr" class="table table-sm table-striped table-bordered display nowrap" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nome</th>                                           
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Cidade</th>
+                                        <th scope="col">Bairro</th>
+                                        <th scope="col">Rua</th>
+                                        <th scope="col">Cep</th>
+                                        <th scope="col">Número</th>
+                                        <th scope="col">Complemento</th>
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Excluir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+    <script  th:src="@{/js/endereco.js(v=${version})}" th:fragment="js"></script>
+    <script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>

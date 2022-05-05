@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-10">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>	
+
+                            <form th:action="${oc.id == null} ? @{/oc/salvar} : @{/oc/editar}"
+                                  th:object="${oc}"	method="POST" class="was-validated">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="comprador" class="form-group">Comprador </label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{comprador}" id="centro" placeholder="António..."
+                                               required/>
+                                        <div class="invalid-feedback">Comprador  é requerido.</div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                                <input type="hidden" name="id" th:field="*{id}">
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary"
+                                                data-toggle="tooltip" data-placement="right" title="Salvar">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr />
+
+                            <h2>OC</h2>
+                            <table id="table-medico-especializacao" 
+                                   class="table table-sm table-striped table-bordered nowrap"
+                                   style="width: 100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">OC</th>
+                                        <th scope="col">Excluir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </section>
+        <script	th:src="@{/js/cateforia.js(v=${version})}"	th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript">
+            $(document).ready(function () {
+                moment.locale('pt-BR');
+                        var idMedico = [[${categoria.id != null ? medico.id : 0}
+                        ]];
+                if (idMedico != 0) {
+                    var table = $('#table-produto-especializacao').DataTable({
+                        searching: false,
+                        lengthMenu: [3, 5],
+                        processing: true,
+                        serverSide: true,
+                        responsive: true,
+                        ajax: {
+                            url: '/produto/datatables/server/fornecedor/' + idProduto,
+                            data: 'data'
+                        },
+                        columns: [
+                            {data: 'id'},
+                            {data: 'titulo'},
+                            {orderable: false,
+                                data: 'id',
+                                "render": function (id) {
+                                    return '<a class="btn btn-danger btn-sm btn-block" href="/medicos/id/' + idProduto + '/excluir/especializacao/' +
+                                            id + '" role="button" data-toggle="modal" data-target="#confirm-modal"><i class="fas fa-times-circle"></i></a>';
+                                }
+                            }
+                        ]
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

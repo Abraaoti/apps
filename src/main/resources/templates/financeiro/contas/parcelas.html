@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>				
+
+                            <form th:action="${conta_a_pagar.id == null} ? @{/pagarcontas/salvar} : @{/pagarcontas/editar}" th:object="${conta_a_pagar}" method="POST" class="was-validated" enctype="multipart/form-data">
+
+                                <div class="mb-3 row">
+                                    <label for="processoFinanceiro" class="col-sm-2 col-form-label">Título<span class="invalid-feedback">*</span></label>                                          
+                                    <div class=" col-sm-1">
+                                        <input type="text" class="form-control" th:field="*{processoFinanceiro}"  id="processoFinanceiro" required/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="documento" class="col-sm-2 col-form-label">Documeto<span class="invalid-feedback">*</span></label>                                          
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" th:field="*{documento}"  id="documento" required/>
+                                    </div>
+                                </div>                               
+
+                                <div class="mb-3 row">
+                                    <label for="valorPagar" class="col-sm-2 col-form-label">Valor Pagar<span class="invalid-feedback">*</span></label>                                          
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control" th:field="*{valorPagar}"  id="valorPagar" required/>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="banco" class="col-sm-2 col-form-label">Banco</label> 
+                                    <div class="col-sm-2">
+                                        <select  id="banco" th:field="*{banco}" class="form-control">
+                                            <option th:each="banco : ${T(br.com.cmil.controle.dominio.enuns.Banco).values()}" th:value="${banco.name()}" th:text="${banco.name()}" selected="selected"/>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="vencimento" class="col-sm-2 col-form-label">Vencimento<span class="invalid-feedback">*</span></label>                                          
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" th:field="*{vencimento}"  id="vencimento" required/>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="observacao" class="col-sm-2 col-form-label">Obs<span class="invalid-feedback">*</span></label>                                          
+                                    <div class="col-sm-6">                                      
+                                        <textarea class="form-control"  th:field="*{observacao}"  id="observacao"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="parcela" class="col-sm-2 col-form-label">PARCELA<span class="invalid-feedback">*</span></label> 
+                                    <div class="col-sm-1">
+                                        <input type="text" class="form-control" id="parcela"   th:field="*{parcela}" readonly />
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <input type="hidden" th:field="*{id}"/>	
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Gegar"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                            <h2>Lista de Contas a Pagar</h2>
+
+                            <table id="table-contas" class="table table-sm table-striped table-bordered display nowrap" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>                                      
+                                        <th scope="col">Título</th>
+                                        <th scope="col">Valor Pag</th>
+                                        <th scope="col">Banco</th>
+                                        <th scope="col">Vencimento</th>
+                                        <th scope="col">Pagamento</th>
+                                        <th scope="col">Situação</th>
+                                        <th scope="col">Observação</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Editar</th> 
+                                        <th scope="col">Pagar</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                </main>
+        </section>
+        <script	th:src="@{/js/parcelas.js(v=${version})}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript">
+
+
+
+        </script>
+    </body>
+</html>

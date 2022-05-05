@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+            <main role="main">               
+                <div class="album py-5 bg-light">
+                    <div class="container">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <h2>Empresas</h2>
+
+                                <table id="table-empresa" class="table table-sm table-striped table-bordered nowrap"
+                                       style="width: 100%">
+                                    <thead class="thead-dark">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Razão Social</th>
+                                    <th scope="col">Abertura</th>
+                                    <th scope="col">CNPJ</th>
+                                    <th scope="col">IE</th>
+                                    <th scope="col">IM</th>
+                                    <th scope="col">SÓCIOS</th>
+                                    <th scope="col">CAPITAL</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Endereço</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Excluir</th>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+
+        </section>
+        <script	th:src="@{/js/empresa.js(v=${version})}" th:fragment="js"></script>
+        <script th:inline="javascript" th:fragment="inlinescript">
+
+        </script>
+    </body>
+</html>

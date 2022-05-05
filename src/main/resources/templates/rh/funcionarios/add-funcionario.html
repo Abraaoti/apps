@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+
+        <section class="layout-content" layout:fragment="corpo">
+
+            <div class="album py-5 bg-light">
+                <div class="container">
+
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md">
+
+                            <div th:replace="fragments/alert :: alerta-sucesso"></div>	
+
+                            <form th:action="${funcionario.id == null} ? @{/funcionarios/salvar} : @{/funcionarios/editar}"
+                                  th:object="${funcionario}"	method="POST" class="was-validated">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="nome" class="form-group">Nome </label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{nome}" id="nome" placeholder="Otávio"
+                                               required/>
+                                        
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="sobrenome" class="form-group">Sobrenome</label>
+                                        <input type="text" class="form-control" th:field="*{sobrenome}" id="sobrenome" placeholder="Lemos"
+                                               required/>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="nascimento">Nascimento</label> 
+                                        <input type="date" class="form-control" id="nascimento" th:field="*{nascimento}" required />
+
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="cpf">CPF</label> 
+                                        <input type="text" class="form-control" id="cpf" placeholder="000000000000000000"
+                                               th:field="*{cpf}" required />
+                                        
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="rg">RG</label> 
+                                        <input type="text" class="form-control" id="rg" placeholder="000000000000" th:field="*{rg}" required />
+                                        
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="cargo">Cargo</label> 
+                                        <select  id="cargo" th:field="*{cargo}" class="form-control">
+                                            <option th:each="cargo : ${cargos}" th:value="${cargo.idCargo}" th:text="${cargo.titulo}" selected="selected" />
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="mae" class="form-group">Mãe </label>
+                                        <input type="text" class="form-control" th:field="*{mae}" id="mae" placeholder="Cmil..." />
+
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="pai" class="form-group">Pai</label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{pai}" id="pai" placeholder="Cmil - Construção e Manutenção Industrial Ltda"
+                                               />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="naturalidade" class="form-group">Naturalidade</label>
+                                        <input type="text" class="form-control"
+                                               th:field="*{naturalidade}" id="naturalidade" placeholder="Cmil - Construção e Manutenção Industrial Ltda"
+                                               />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="empresa">EMPRESA</label> 
+                                        <select  id="empresa" th:field="*{empresa}" class="form-control">
+                                            <option th:each="empresa : ${empresa}" th:value="${empresa.id}" th:text="${empresa.nome}" selected="selected" />
+                                        </select>
+
+                                    </div>
+                               
+
+                                    <div class="form-group col-md-2">
+                                        <label for="salario">Salário</label> 
+                                        <input type="text" class="form-control" id="salario" placeholder="000000000000000000"
+                                               th:field="*{salario}" required />
+                                        
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="passaporte">Passaporte</label> 
+                                        <input type="text" class="form-control" id="passaporte" placeholder="000000000000" th:field="*{passaporte}" required />
+                                     
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="ec">Estado Civil</label> 
+                                        <select  id="ec" th:field="*{ec}" class="form-control">
+                                            <option th:each="ec : ${T(br.com.cmil.controle.dominio.enuns.EstadoCivil).values()}" th:value="${ec.name()}" th:text="${ec.name()}" selected="selected" />
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="genero">Genero</label> 
+                                        <select  id="genero" th:field="*{genero}" class="form-control">
+                                            <option th:each="genero : ${T(br.com.cmil.controle.dominio.enuns.Genero).values()}" th:value="${genero.name()}" th:text="${genero.name()}" selected="selected"/>
+                                        </select>
+                                    </div>
+                                </div>
+
+                               
+                                <input type="hidden" th:field="*{id}"/>	
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary" data-toggle="tooltip"
+                                                data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr/>
+
+                            <h2>Lista de Funcionários</h2>
+
+                            <table id="table-funcionario" class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nome </th>
+                                        <th scope="col">Sobrenome</th>
+                                        <th scope="col">Nascimento</th>
+
+                                        <th scope="col">CPF</th>
+                                        <th scope="col">RG</th>
+                                        <th scope="col">PASSAPORTE</th>
+                                        <th scope="col">MÃE</th>
+                                        <th scope="col">PAI</th>
+                                        <th scope="col">ES</th>
+                                        <th scope="col">GENERO</th>
+                                        <th scope="col">FUNÇÃO</th>
+                                        <th scope="col">ADMISSÃO</th>
+                                        <th scope="col">SALÁRIO</th>
+                                        <th scope="col">NATURALIDADE</th>                                        
+                                        <th scope="col">EMPRESA</th>                                        
+                                        <th scope="col">Editar</th>
+                                        <th scope="col">Endereço</th>
+                                        <th scope="col">Telefone</th>
+                                        <th scope="col">Excluir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+    <script src="../../static/js/funcionario.js(v=${version})" th:src="@{/js/funcionario.js}" th:fragment="js"></script>
+    <script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>
