@@ -31,8 +31,8 @@ $(document).ready(function () {
             {data: 'valor', render: $.fn.dataTable.render.number('.', ',', 2, 'R$ ')},
             {data: 'qtdparcela'},
             {data: 'forma_pagamento'},
-            {data: 'arquivo', render: function (data, type, full, meta) {
-                    return '<a href="../docs/' + 
+            {data: 'arquivo', render:  function (data) {
+                    return '<a href="/processofinanceiro/download/' + 
                             data + '" dawnload target="_blank">'+data+'</a>';
                 }
             },

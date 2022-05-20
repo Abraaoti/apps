@@ -33,15 +33,15 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("titulo", "Bem vindo a Plataforma CMIL");
         context.setVariable("texto", "Precisamos que confirme seu cadastro, clicando no link abaixo");
-        context.setVariable("linkConfirmacao", "http://localhost:5000/u/confirmacao/cadastro?codigo=" + codigo);
+        context.setVariable("linkConfirmacao", "https://app-cmil.herokuapp.com/u/confirmacao/cadastro?codigo=" + codigo);
 
         String html = template.process("email/confirmacao", context);
         helper.setTo(destino);
         helper.setText(html, true);
         helper.setSubject("Confirmacao de Cadastro");
-        helper.setFrom("elavokokassinda@gmail.com");
+        helper.setFrom("nao_responder@cmil.com.br");
 
-        helper.addInline("logo", new ClassPathResource("/static/image/spring-security.png"));
+        helper.addInline("logo", new ClassPathResource("/static/image/logo.png"));
 
         mailSender.send(message);
     }
@@ -60,9 +60,9 @@ public class EmailService {
         helper.setTo(destino);
         helper.setText(html, true);
         helper.setSubject("Redefinição de Senha");
-        helper.setFrom("elavokokassinda@gmail.com");
+        helper.setFrom("nao_respoder@gmail.com");
 
-        helper.addInline("logo", new ClassPathResource("/static/image/spring-security.png"));
+        helper.addInline("logo", new ClassPathResource("/static/image/LOGO.png"));
 
         mailSender.send(message);
     }

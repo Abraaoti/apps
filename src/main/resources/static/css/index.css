@@ -8,7 +8,7 @@ body {
 
 /* Style the header */
 .header {
-    background-color: #000;
+    background-color:  #5499c7;
     padding: 20px;
     text-align: center;
 }
@@ -31,8 +31,8 @@ body {
 
 /* Change color on hover */
 .topnav a:hover {
-    background-color: #114391;
-    color: black;
+    background-color: #F2F3F4;
+    
 }
 /* Create three equal columns that floats next to each other */
 .column {
@@ -65,7 +65,8 @@ ul.topnav {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #5499c7;
+    text-transform: uppercase;
 }
 
 ul.topnav li {

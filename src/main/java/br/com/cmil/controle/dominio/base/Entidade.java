@@ -1,12 +1,11 @@
-
 package br.com.cmil.controle.dominio.base;
 
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -14,11 +13,12 @@ import javax.persistence.MappedSuperclass;
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
-public abstract  class Entidade implements Serializable {
+public abstract class Entidade implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     public Long id;
 
     public Entidade() {
@@ -60,6 +60,4 @@ public abstract  class Entidade implements Serializable {
         return "Entidade{" + "id=" + id + '}';
     }
 
-   
 }
-

@@ -8,6 +8,7 @@ import br.com.cmil.controle.dominio.enuns.Situacao;
 import br.com.cmil.controle.dominio.repositorys.IContaPagarRepository;
 import br.com.cmil.controle.dominio.services.interfaces.IContaPagarService;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,27 @@ public class ContaPagarServiceImplementa implements IContaPagarService {
     @Override
     public ContaPagar save(ContaPagar contaPagar) {
         if (contaPagar.getId() == null) {
-            return addContaPagar(contaPagar);
+            Integer parcela = 0;
+            BigDecimal valor;
+            Integer totalparcela = contaPagar.getParcela();
+            LocalDate vencimento = LocalDate.from(contaPagar.getVencimento());
+            BigDecimal valor_total = contaPagar.getValorPagar();
+            ContaPagar conta = new ContaPagar();
+            do {
+                parcela += 1;
+                valor = valor_total.divide(BigDecimal.valueOf(totalparcela), 3, RoundingMode.CEILING);
+                conta.setValorPagar(valor);
+                conta.setProcessoFinanceiro(contaPagar.getProcessoFinanceiro());
+                contaPagar.setProcessoFinanceiro(contaPagar.getProcessoFinanceiro());
+                conta.setVencimento(vencimento.plusMonths(parcela));
+                conta.setData_pagamento(null);
+                conta.setBanco(contaPagar.getBanco());
+                conta.setDocumento(contaPagar.getDocumento() + "/" + parcela);
+                conta.setObservacao(contaPagar.getObservacao());
+
+                return addContaPagar(contaPagar);
+            } while (parcela < totalparcela);
+
         }
         return update(contaPagar);
     }
@@ -172,6 +193,8 @@ public class ContaPagarServiceImplementa implements IContaPagarService {
 
     }
 
+    
+
     @Override
     public ContaPagar pagarConta(ContaPagar contaPagar) {
         Optional<ContaPagar> contaPagarId = iContaPagarRepository.findById(contaPagar.getId());
@@ -203,8 +226,7 @@ public class ContaPagarServiceImplementa implements IContaPagarService {
 
     @Override
     public ContaPagar buscarContaPagarPorDataInicialDataFinal(LocalDate dataInicial, LocalDate dataFinal) {
-         return iContaPagarRepository.findDateInitAndDateFim(dataInicial,dataFinal);
+        return iContaPagarRepository.findDateInitAndDateFim(dataInicial, dataFinal);
     }
-
 
 }

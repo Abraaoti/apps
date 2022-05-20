@@ -1,13 +1,18 @@
 package br.com.cmil.controle.dominio.base;
 
 import br.com.cmil.controle.dominio.entidades.Usuario;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -17,8 +22,13 @@ import org.springframework.format.annotation.NumberFormat;
  */
 @SuppressWarnings("serial")
 @MappedSuperclass
-public abstract class Conta extends Entidade {
+public abstract class Conta implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
+    public Long id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate emissao;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -41,7 +51,16 @@ public abstract class Conta extends Entidade {
         this.usuario = usuario;
     }
 
-    public Conta(LocalDate emissao, LocalDate vencimento, String documento, BigDecimal valor, Usuario usuario, String arquivo) {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Conta(Long id, LocalDate emissao, LocalDate vencimento, String documento, BigDecimal valor, Usuario usuario, String arquivo) {
+        this.id = id;
         this.emissao = emissao;
         this.vencimento = vencimento;
         this.documento = documento;
@@ -49,6 +68,8 @@ public abstract class Conta extends Entidade {
         this.usuario = usuario;
         this.arquivo = arquivo;
     }
+
+   
 
     public LocalDate getEmissao() {
         return emissao;
@@ -108,7 +129,35 @@ public abstract class Conta extends Entidade {
 
     @Override
     public String toString() {
-        return "Conta{" + "emissao=" + emissao + ", vencimento=" + vencimento + ", documento=" + documento + ", valor=" + valor + ", usuario=" + usuario + ", arquivo=" + arquivo + '}';
+        return "Conta{" + "id=" + id + ", emissao=" + emissao + ", vencimento=" + vencimento + ", documento=" + documento + ", valor=" + valor + ", usuario=" + usuario + ", arquivo=" + arquivo + '}';
+    }
+
+   
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.documento);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Conta other = (Conta) obj;
+        if (!Objects.equals(this.documento, other.documento)) {
+            return false;
+        }
+        return Objects.equals(this.id, other.id);
     }
 
     

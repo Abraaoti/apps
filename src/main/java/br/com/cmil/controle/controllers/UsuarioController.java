@@ -3,7 +3,6 @@ package br.com.cmil.controle.controllers;
 import br.com.cmil.controle.dominio.entidades.Perfil;
 import br.com.cmil.controle.dominio.entidades.Usuario;
 import br.com.cmil.controle.dominio.enuns.PerfilTipo;
-import br.com.cmil.controle.dominio.services.interfaces.IFuncionarioService;
 import br.com.cmil.controle.dominio.services.interfaces.IPerfilService;
 import br.com.cmil.controle.dominio.services.interfaces.IUsuarioService;
 import java.util.HashMap;
@@ -37,12 +36,10 @@ public class UsuarioController {
     private final String USUARIO = "usuario/";
     private final IUsuarioService service;
     private final IPerfilService iPerfilService;
-    private final IFuncionarioService iFuncionarioService;
 
-    public UsuarioController(IUsuarioService service, IPerfilService iPerfilService, IFuncionarioService iFuncionarioService) {
+    public UsuarioController(IUsuarioService service, IPerfilService iPerfilService) {
         this.service = service;
         this.iPerfilService = iPerfilService;
-        this.iFuncionarioService = iFuncionarioService;
     }
 
    
@@ -161,7 +158,7 @@ public class UsuarioController {
 
     // recebe a requisicao de confirmacao de cadastro
     @GetMapping("/confirmacao/cadastro")
-    public String respostaConfirmacaoCadastroPaciente(@RequestParam("codigo") String codigo,
+    public String respostaConfirmacaoCadastro(@RequestParam("codigo") String codigo,
             RedirectAttributes attr) {
         service.ativarCadastroFuncionario(codigo);
         attr.addFlashAttribute("alerta", "sucesso");

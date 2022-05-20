@@ -17,6 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.cmil.controle.dominio.repositorys.IProcessoFinanceiroRepository;
 import br.com.cmil.controle.dominio.services.interfaces.IProcessoFinanceiroService;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -28,17 +36,19 @@ public class ProcessoFinanceiroServiceImplementa implements IProcessoFinanceiroS
 
     private final IProcessoFinanceiroRepository iProcessoPagarContaRepository;
     private final Datatables datatables;
+    private final String PATHS;
 
     @Autowired
-    public ProcessoFinanceiroServiceImplementa(IProcessoFinanceiroRepository iProcessoPagarContaRepository, Datatables datatables) {
+    public ProcessoFinanceiroServiceImplementa(IProcessoFinanceiroRepository iProcessoPagarContaRepository, Datatables datatables, @Value("${app.file.upload-dir}") String root) {
         this.iProcessoPagarContaRepository = iProcessoPagarContaRepository;
         this.datatables = datatables;
+        this.PATHS = root;
     }
 
     @Override
-    public ProcessoFinanceiro save(ProcessoFinanceiro processoPagarConta) throws IOException {
+    public ProcessoFinanceiro save(ProcessoFinanceiro processoPagarConta, MultipartFile arquivo) throws IOException {
         if (processoPagarConta.getId() == null) {
-            return add(processoPagarConta);
+            return add(processoPagarConta, arquivo);
         }
         return update(processoPagarConta);
     }
@@ -72,7 +82,7 @@ public class ProcessoFinanceiroServiceImplementa implements IProcessoFinanceiroS
         var processoFinanceiro = processoFinanceiroId.get();
         processoFinanceiro.setEmissao(processoFinanceiros.getEmissao());
         processoFinanceiro.setVencimento(processoFinanceiros.getVencimento());
-        processoFinanceiro.setDocumento(processoFinanceiros.getDocumento());        
+        processoFinanceiro.setDocumento(processoFinanceiros.getDocumento());
         processoFinanceiro.setFornecedor(processoFinanceiros.getFornecedor());
         processoFinanceiro.setQtdparcela(processoFinanceiros.getQtdparcela());
         processoFinanceiro.setValor(processoFinanceiros.getValor());
@@ -109,25 +119,42 @@ public class ProcessoFinanceiroServiceImplementa implements IProcessoFinanceiroS
         return datatables.getResponse(page);
     }
 
-    protected ProcessoFinanceiro add(ProcessoFinanceiro processoFinanceiros) {
+    protected ProcessoFinanceiro add(ProcessoFinanceiro processoFinanceiros, MultipartFile arquivo) throws IOException {
         ProcessoFinanceiro processoFinanceiro = new ProcessoFinanceiro();
+        String fileName = StringUtils.cleanPath(arquivo.getOriginalFilename());
+       
+
+        processoFinanceiro.setArquivo(fileName);
         processoFinanceiro.setEmissao(processoFinanceiros.getEmissao());
         processoFinanceiro.setVencimento(processoFinanceiros.getVencimento());
-        processoFinanceiro.setDocumento(processoFinanceiros.getDocumento());       
+        processoFinanceiro.setDocumento(processoFinanceiros.getDocumento());
         processoFinanceiro.setFornecedor(processoFinanceiros.getFornecedor());
         processoFinanceiro.setCentroCusto(processoFinanceiros.getCentroCusto());
         processoFinanceiro.setUsuario(processoFinanceiros.getUsuario());
 
         processoFinanceiro.setQtdparcela(processoFinanceiros.getQtdparcela());
-        processoFinanceiro.setValor(processoFinanceiros.getValor());
-        processoFinanceiro.setArquivo(processoFinanceiros.getArquivo());
+        processoFinanceiro.setValor(processoFinanceiros.getValor());       
         for (FormaPagamento value : FormaPagamento.values()) {
             if (value.equals(processoFinanceiros.getForma_pagamento())) {
                 processoFinanceiro.setForma_pagamento(value);
             }
         }
 
-        return iProcessoPagarContaRepository.save(processoFinanceiro);
+        Path uploadPath = Paths.get(PATHS);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try ( InputStream inputStream = arquivo.getInputStream()) {
+            Path filePath = uploadPath.resolve(fileName).toAbsolutePath().normalize();
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+            return iProcessoPagarContaRepository.save(processoFinanceiro);
+
+        } catch (IOException ioe) {
+            throw new IOException("C: " + fileName, ioe);
+        }
+
     }
 
     @Override

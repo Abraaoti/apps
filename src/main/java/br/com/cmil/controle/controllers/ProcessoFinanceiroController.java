@@ -1,7 +1,6 @@
 package br.com.cmil.controle.controllers;
 
 import br.com.cmil.controle.dominio.entidades.ProcessoFinanceiro;
-import br.com.cmil.controle.dominio.entidades.Usuario;
 import br.com.cmil.controle.dominio.services.interfaces.ICentroCustoService;
 import br.com.cmil.controle.dominio.services.interfaces.IFornecedorService;
 import java.util.HashMap;
@@ -19,18 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.cmil.controle.dominio.services.interfaces.IProcessoFinanceiroService;
 import br.com.cmil.controle.dominio.services.interfaces.IUsuarioService;
-import br.com.cmil.controle.utils.FileUploadUtil;
 import java.io.IOException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  *
@@ -53,11 +44,7 @@ public class ProcessoFinanceiroController{
     }
     
     private final String PROCESSO = "financeiro/contas/processo/";
-    @Value("${app.file.upload-dir}")
-    private  String PATHS ;
-    //private final String PATHS = "src/main/resources/static/docs/";
-
-    // abrir pagina home
+  
     @GetMapping("/novo")
     public ModelAndView formProcessoFinanceiro(ProcessoFinanceiro processo, @AuthenticationPrincipal User user) {
         
@@ -79,19 +66,11 @@ public class ProcessoFinanceiroController{
     @PostMapping("/salvar")
     public String salvar(ProcessoFinanceiro processoFinanceiro,
             @RequestParam("file") MultipartFile arquivo,
-            RedirectAttributes attr, @AuthenticationPrincipal User user) throws IOException {
-        if (processoFinanceiro.getId() == null && processoFinanceiro.getUsuario().getId()==null) {
-            Usuario operador = iUsuarioService.buscarPorEmail(user.getUsername());
-            processoFinanceiro.setUsuario(operador);
-        }
-        String fileName = StringUtils.cleanPath(arquivo.getOriginalFilename());
-        processoFinanceiro.setArquivo(fileName);
+            RedirectAttributes attr) throws IOException {       
       
-        ProcessoFinanceiro processoId = iProcessoFinanceiroService.save(processoFinanceiro);
+        ProcessoFinanceiro processoId = iProcessoFinanceiroService.save(processoFinanceiro,arquivo);
 
-       
-        FileUploadUtil.saveFile(PATHS, fileName, arquivo);
-        attr.addFlashAttribute("sucesso", "Operação realizada com sucesso \n" + fileName + "!");
+        attr.addFlashAttribute("sucesso", "Operação realizada com sucesso \n" + processoId.getArquivo() + "!");
         return "redirect:/processofinanceiro/novo";
     }
     

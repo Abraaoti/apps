@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IProcessoFinanceiroService {
 
-    ProcessoFinanceiro save(ProcessoFinanceiro processoPagarConta)throws IOException;
+    ProcessoFinanceiro save(ProcessoFinanceiro processoPagarConta, MultipartFile arquivo)throws IOException;
 
     Iterable<ProcessoFinanceiro> listAllProcessoFinanceiro();
 

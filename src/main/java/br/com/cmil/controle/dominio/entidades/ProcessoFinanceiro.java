@@ -50,14 +50,14 @@ public class ProcessoFinanceiro extends Conta {
         this.forma_pagamento = forma_pagamento;
     }
 
-    public ProcessoFinanceiro(Fornecedor fornecedor, CentroCusto centroCusto, FormaPagamento forma_pagamento, LocalDate emissao, LocalDate vencimento, String documento, BigDecimal valor, Usuario usuario, String arquivo) {
-        super(emissao, vencimento, documento, valor, usuario, arquivo);
+    public ProcessoFinanceiro(Fornecedor fornecedor, CentroCusto centroCusto, FormaPagamento forma_pagamento, Long id, LocalDate emissao, LocalDate vencimento, String documento, BigDecimal valor, Usuario usuario, String arquivo) {
+        super(id, emissao, vencimento, documento, valor, usuario, arquivo);
         this.fornecedor = fornecedor;
         this.centroCusto = centroCusto;
         this.forma_pagamento = forma_pagamento;
     }
 
-       
+   
 
     public Fornecedor getFornecedor() {
         return fornecedor;

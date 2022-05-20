@@ -47,28 +47,20 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/index").permitAll()
                 .antMatchers("/u/novo/cadastro", "/u/cadastro/financeiro/salvar", "/u/cadastro/realizado").permitAll()
                 .antMatchers("/u/confirmacao/cadastro").permitAll()
-                .antMatchers("/u/p/**").permitAll()
+                .antMatchers("/u/**").permitAll()
                 //acessos privados admin
                 .antMatchers("/u/editar/senha", "/u/confirmar/senha").hasAnyAuthority(FINANCEIRO, ADMINISTRATIVO)
                 .antMatchers("/u/**").hasAuthority(ADMIN)
-                //acessos privados medico
+                //acessos privados
 
-                .antMatchers("/medicos/especialidade/titulo/*").hasAuthority(FINANCEIRO)
-                .antMatchers("/diretoria/dados", "/medicos/salvar", "/medicos/editar").hasAnyAuthority(ADMINISTRATIVO, ADMIN)
-                .antMatchers("/medicos/**").hasAuthority(ADMINISTRATIVO)
-                //acessos privados especialidades
-                .antMatchers("/especialidades/datatables/server/medico/*").hasAnyAuthority(ADMINISTRATIVO, ADMIN)
-                .antMatchers("/especialidades/titulo").hasAnyAuthority(ADMINISTRATIVO, ADMIN, FINANCEIRO)
-                .antMatchers("/especialidades/**").hasAuthority(ADMIN)
-                //acessos privados pacientes
-                .antMatchers("/agendamentos//horario/medico/**").hasAuthority(ADMINISTRATIVO)
-                .antMatchers("/financeiro/contapagar/**").hasAuthority(FINANCEIRO)
+                .antMatchers("/**").hasAuthority(ADMIN)
+                .antMatchers("/financeiro/contapagar/**").hasAnyAuthority(FINANCEIRO,ADMINISTRATIVO,DIRETORIA)
                 .antMatchers("/administrativo/**").hasAuthority(ADMINISTRATIVO)
                 .antMatchers("/diretoria/**").hasAuthority(DIRETORIA)
-                .antMatchers("/engenheiro/**").hasAuthority(ENGENHEIRO)
-                .antMatchers("/financeiro/**").hasAuthority(FINANCEIRO)
-                .antMatchers("/rh/**").hasAuthority(RH)
-                .antMatchers("/tecnico/**").hasAuthority(TECNICO)
+                .antMatchers("/engenheiro/**").hasAnyAuthority(ENGENHEIRO,ADMINISTRATIVO,DIRETORIA)
+                .antMatchers("/financeiro/**").hasAnyAuthority(DIRETORIA,ADMIN,ADMINISTRATIVO)
+                .antMatchers("/rh/**").hasAnyAuthority(RH,ADMINISTRATIVO,DIRETORIA)
+                .antMatchers("/tecnico/**").hasAnyAuthority(TECNICO,ADMINISTRATIVO,DIRETORIA)
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -88,7 +80,7 @@ public class WebSecurityConfigs extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/403");
         http.sessionManagement()
-                .maximumSessions(1)
+                .maximumSessions(5)
                 .maxSessionsPreventsLogin(true)
                 .sessionRegistry(sessionRegistry());
 
