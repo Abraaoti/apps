@@ -37,12 +37,12 @@ public class UsuarioController {
     private final String USUARIO = "usuario/";
     private final IUsuarioService service;
     private final IPerfilService iPerfilService;
-    private final IFuncionarioService iFuncionarioService;
+   
 
-    public UsuarioController(IUsuarioService service, IPerfilService iPerfilService, IFuncionarioService iFuncionarioService) {
+    public UsuarioController(IUsuarioService service, IPerfilService iPerfilService) {
         this.service = service;
         this.iPerfilService = iPerfilService;
-        this.iFuncionarioService = iFuncionarioService;
+       
     }
 
    

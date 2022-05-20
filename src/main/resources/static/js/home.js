@@ -1,50 +1,36 @@
-$(document).ready(() => {
-    
-    var table = $('#table-home').DataTable({
-        dom: 'Pfrtip'
-    });
-	var container = $('<div/>').insertBefore(table.table().container());
-        
-         var chart = Highcharts.stockChart(container[0], {
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: 'Staff Count Per Position'
-        },
-        series: [
-            {
-                data: chartData(table)
-            }
-        ]
-    });
-    
-     table.on('draw', function () {
-        chart.series[0].setData(chartData(table));
-    });
-       
-});
+var data = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Ago","Set","Out"],
+    datasets: [{
+            label: "Contas #1",
+            backgroundColor: "rgba(255,99,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            borderWidth: 2,
+            hoverBackgroundColor: "rgba(255,99,132,0.4)",
+            hoverBorderColor: "rgba(255,99,132,1)",
+            data: [65, 59, 20, 81, 56, 55, 40, 0, 0, 0]
+        }]
+};
 
-function chartData(table) {
-    var counts = {};
- 
-    // Count the number of entries for each position
-    table
-        .column(1, { search: 'applied' })
-        .data()
-        .each(function (val) {
-            if (counts[val]) {
-                counts[val] += 1;
-            } else {
-                counts[val] = 1;
+var options = {
+    maintainAspectRatio: false,
+    scales: {
+        y: {
+            stacked: true,
+            grid: {
+                display: true,
+                color: "rgba(255,99,132,0.2)"
             }
-        });
- 
-    // And map it to the format highcharts uses
-    return $.map(counts, function (val, key) {
-        return {
-            name: key,
-            y: val
-        };
-    });
-}
+        },
+        x: {
+            grid: {
+                display: false
+            }
+        }
+    }
+};
+
+new Chart('chart', {
+    type: 'bar',
+    options: options,
+    data: data
+});

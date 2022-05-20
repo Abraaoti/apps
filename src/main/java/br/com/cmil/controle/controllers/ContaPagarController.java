@@ -130,6 +130,11 @@ public class ContaPagarController {
         return ResponseEntity.ok(iContaPagarService.buscarContaPagar(request));
     }
     
+    @GetMapping("/chartes")
+    public ResponseEntity<?> contaPagar() {
+        return ResponseEntity.ok(iContaPagarService.listAllContaPagar());
+    }
+    
 
     @GetMapping("/titulo")
     public ResponseEntity<?> getContaPagarTermo(@RequestParam("termo") String termo) {

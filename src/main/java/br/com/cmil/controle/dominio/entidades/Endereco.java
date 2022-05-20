@@ -40,7 +40,7 @@ public class Endereco implements Serializable {
     private String complemento;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_pessoa_id", referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "endereco_pessoa_id", referencedColumnName = "id")
     private Pessoa pessoaEndereco;
 
     public Endereco() {

@@ -33,7 +33,7 @@ public class EmailService {
         Context context = new Context();
         context.setVariable("titulo", "Bem vindo a Plataforma CMIL");
         context.setVariable("texto", "Precisamos que confirme seu cadastro, clicando no link abaixo");
-        context.setVariable("linkConfirmacao", "http://localhost:5000/u/confirmacao/cadastro?codigo=" + codigo);
+        context.setVariable("linkConfirmacao", "http://localhost:8080/u/confirmacao/cadastro?codigo=" + codigo);
 
         String html = template.process("email/confirmacao", context);
         helper.setTo(destino);
